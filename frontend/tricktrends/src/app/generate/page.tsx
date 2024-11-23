@@ -135,7 +135,7 @@ export default function GeneratePage() {
   };
 
   const Step1 = () => (
-    <div className="text-center">
+    <div className="text-center bg-[#a3b18a] text-[#344e41]">
       <h2 className="text-2xl mb-5 mt-[7.5%] font-bold">Qual é o seu mood hoje?</h2>
       <div className="relative flex justify-center -ml-[70%]">
         <GenreSelection formData={formData} setFormData={setFormData} />
@@ -150,7 +150,7 @@ export default function GeneratePage() {
   
 
   const Step3 = () => (
-    <div className="text-center">
+    <div className="text-center  bg-[#a3b18a] text-[#344e41]">
       <h2 className="text-2xl mb-5 mt-[7.5%] font-bold">Quanto você quer dançar?</h2>
       <Slider
         className="w-[60%] mx-auto bg-black"
@@ -172,7 +172,7 @@ export default function GeneratePage() {
   );
 
   const Step4 = () => (
-    <div className="text-center">
+    <div className="text-center  bg-[#a3b18a] text-[#344e41]">
       <h2 className="text-2xl mb-5 mt-[7.5%] font-bold">Deseja evitar músicas explícitas?</h2>
       <Checkbox
         checked={formData.disableExplicit}
@@ -191,7 +191,7 @@ export default function GeneratePage() {
   );
 
   const Results = () => (
-    <div className="flex flex-col items-center text-center">
+    <div className="flex flex-col items-center text-center bg-[#a3b18a] text-[#344e41]">
       <div className="text-center w-[75%]">
         <Button onClick={onSubmit} className="bg-black text-white mr-5">
           Gerar Novamente
@@ -244,7 +244,7 @@ export default function GeneratePage() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="px-4 py-8 min-h-screen bg-[#a3b18a] text-[#344e41]">
       <h1 className="text-4xl font-bold text-center mb-5">Descubra suas novas músicas favoritas</h1>
       {step === 1 && <Step1 />}
       {step === 3 && <Step3 />}
