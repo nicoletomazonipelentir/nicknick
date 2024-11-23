@@ -1,0 +1,10 @@
+abrir 2 terminais
+
+
+1-cd backend 
+py run.py
+
+2-cd frontend
+cd tricktrends
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+npm run dev 
