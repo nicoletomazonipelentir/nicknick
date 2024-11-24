@@ -200,7 +200,7 @@ export default function GeneratePage() {
           Voltar para Home
         </Button>
         <div className="mt-5"></div>
-        <Table>
+        <Table className="bg-white">
           <TableHeader>
             <TableRow>
               <TableHead><p className="text-center mt-2">Música</p></TableHead>
