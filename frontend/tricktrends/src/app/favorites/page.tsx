@@ -5,6 +5,7 @@ import { Loader2 } from 'lucide-react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from "@/components/ui/button";
+import { FaStar } from "react-icons/fa"; // Ícone de estrela
 import { useRouter } from "next/navigation";
 
 interface FavoriteSong {
@@ -57,6 +58,39 @@ export default function FavoritesPage() {
     fetchFavorites()
   }, [])
 
+  // Função para remover música dos favoritos
+  const handleRemoveFavorite = async (trackId: string) => {
+    const userId = localStorage.getItem('userId')
+    if (!userId) {
+      alert('Usuário não autenticado.')
+      return
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/v1/favorite/songs', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: parseInt(userId, 10),
+          track_id: trackId,
+        }),
+      });
+    
+      if (!response.ok) {
+        throw new Error('Failed to unfavorite the song');
+      }
+    
+      setFavorites((prev) => prev.filter((song) => song.track_id !== trackId));
+      alert('Música removida das favoritas!');
+    } catch (err) {
+      console.error('Erro ao remover música:', err);
+      alert('Erro encontrado no desfavoritar uma música.Tente novamente.');
+    }
+    
+  }
+
   return (
     <div className="min-h-screen bg-[#a3b18a] text-[#344e41]">
       <div className="container mx-auto px-4 py-8">
@@ -83,8 +117,9 @@ export default function FavoritesPage() {
                   <TableRow>
                     <TableHead>Músicas</TableHead>
                     <TableHead>Artista</TableHead>
-                    <TableHead>Album</TableHead>
+                    <TableHead>Álbum</TableHead>
                     <TableHead>Gênero</TableHead>
+                    <TableHead>Ação</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -94,6 +129,15 @@ export default function FavoritesPage() {
                       <TableCell>{song.artist.join(', ')}</TableCell>
                       <TableCell>{song.album}</TableCell>
                       <TableCell>{song.genre}</TableCell>
+                      <TableCell>
+                        <Button
+                          className="bg-gray-400 hover:bg-gray-500 text-black"
+                          onClick={() => handleRemoveFavorite(song.track_id)}
+                        >
+                          <FaStar style={{ color: 'yellow' }} />
+                          Remover
+                        </Button>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

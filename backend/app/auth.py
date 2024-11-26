@@ -52,3 +52,25 @@ def favorite_song():
 
     return jsonify({'message': 'Song favorited successfully'}), 200
 
+@auth.route('/api/v1/favorite/songs', methods=['DELETE'])
+def unfavorite_song():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    track_id = data.get('track_id')
+
+    if not user_id or not track_id:
+        return jsonify({'message': 'User ID and track ID are required'}), 400
+
+    # Procurar o registro favorito no banco de dados
+    favorite = Favorite.query.filter_by(user_id=user_id, track_id=track_id).first()
+
+    if not favorite:
+        return jsonify({'message': 'Favorite not found'}), 404
+
+    # Remover o registro favorito
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return jsonify({'message': 'Song unfavorited successfully'}), 200
+
+
